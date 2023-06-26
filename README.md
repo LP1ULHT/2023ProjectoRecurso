@@ -1,10 +1,10 @@
-# Projecto Final 2023
+# Projecto de Recurso 2023
 
 **UNIVERSIDADE LUSÓFONA DE HUMANIDADES E TECNOLOGIAS**
 
 *Linguagens de Programação I*
 
-# Projecto Final 2023 - PORT MANAGER
+# Projecto de Recurso 2023 - PORT MANAGER
 >Na resolução deste projecto deve ser utilizada a Linguagem de Programação C. Para além da correta implementação dos requisitos, tenha em conta os seguintes aspetos:
 >- O código apresentado deve ser bem indentado. 
 >- O código deve compilar sem erros ou *warnings* utilizando o *gcc* com as seguintes flags:
@@ -25,46 +25,47 @@ Neste exercício vamos desenvolver um simulador de um estaleiro de embarcações
 - Neste estaleiro podem atracar até 10 embarcações. Os lugares para atracagem estão identificados de 0 a 9. 
 - Cada embarcação é inequivocamente identificada por uma matrícula composta por 4 letras maiúsculas (os caracteres permitidos são de A a Z, exemplo ALBA). 
 - Cada embarcação pode conter até 6 pilhas de contentores, identificadas pelos números de 0 a 5. 
-- Cada contentor é identificado por um código único composto por 2 letras e 1 número (exemplo BB7).
+- Cada contentor é identificado por um código único composto por 4 letras e 2 número (exemplo AABB77).
 
 - Cada contentor tem também associado um peso, em kg. O peso dos contentores tem de ser sempre igual ou superior a 500kg.
+- Cada contentor tem ainda associada uma lista com os produtos transportados nesse contentor. Esta lista pode conter um número arbitrário de elementos.
 
 - Existem duas gruas identificadas pelas letras A e B, que servem para mover contentores entre pilhas. As gruas têm comportamentos ligeiramente diferentes, contudo ambas transportam contentores que estão numa determinada pilha de uma embarcação para outra pilha que poderá estar na mesma embarcação, noutra embarcação, ou em terra. 
 
 - Não há limite para o número de contentores que uma pilha pode suportar.
 
-A título de exemplo suponha que a embarcação `LENA` está atracada no ponto de atracagem `5`. Esta embarcação tem 3 pilhas de contentores. A pilha 0 tem os contentores AA0 BB0 CC0, a pilha 1 tem os contentores DD0 EE0 e a pilha P2 tem os contentores FF0, como se pode ver na seguinte imagem:
+A título de exemplo suponha que a embarcação `LENA` está atracada no ponto de atracagem `5`. Esta embarcação tem 3 pilhas de contentores. A pilha 0 tem os contentores AAAA00 BBBB00 CCCC00, a pilha 1 tem os contentores DDDD00 EEEE00 e a pilha P2 tem os contentores FFFF00, como se pode ver na seguinte imagem:
 
 
 ![Lena01](./lena.png)
 
 
-Qualquer uma das gruas pode, por exemplo, mover 1 contentor da pilha 1 para a pilha 2 e neste caso será sempre retirado o contentor que está no topo da pilha, ou seja o EE0.  A grua B pode também mover 2 contentores da pilha 0 para a pilha 1, e neste caso serão movidos os contentores CC0 e BB0.
+Qualquer uma das gruas pode, por exemplo, mover 1 contentor da pilha 1 para a pilha 2 e neste caso será sempre retirado o contentor que está no topo da pilha, ou seja o EEEE00.  A grua B pode também mover 2 contentores da pilha 0 para a pilha 1, e neste caso serão movidos os contentores CCCC00 e BBBB00.
 
 A diferença de funcionamento das duas gruas prende-se com a ordem pela qual os contentores são movidos. A grua A apenas consegue mover um contentor de cada vez, pegando sempre no contentor que está no topo. A grua B consegue mover até 4 contentores de uma só vez, preservando a ordem original desse grupo de contentores. Suponhamos que partimos da configuração original do exemplo:
 ```
-  CC0
-  BB0   EE0
-  AA0   DD0    FF0
-|-----|------|------|
+  CCCC00
+  BBBB00   EEEE00
+  AAAA00   DDDD00   FFFF00
+|--------|--------|--------|
    0      1     2
 5: LENA
 ```
 
-Se a grua A for ordenada a mover 2 contentores da pilha 0 para a pilha 2, ele teria de fazer dois movimentos onde no fim da operação, a pilha 2 terá os contentores BB0, CC0 e FF0:
+Se a grua A for ordenada a mover 2 contentores da pilha 0 para a pilha 2, ele teria de fazer dois movimentos onde no fim da operação, a pilha 2 terá os contentores BBBB00, CCCC00 e FFFF00:
 ```
-               BB0
-        EE0    CC0
-  AA0   DD0    FF0
-|-----|------|------|
+           BBBB00
+  EEEE00   CCCC00
+  AAAA00   DDDD00   FFFF00
+|--------|--------|--------|
    0      1      2
 ```
-Por outro lado se o mesmo comando for dado à grua B, a pilha 2 ficaria com os contentores CC0, BB0, FF0:
+Por outro lado se o mesmo comando for dado à grua B, a pilha 2 ficaria com os contentores CCCC00, BBBB00, FFFF00:
 ```
-               CC0
-        EE0    BB0
-  AA0   DD0    FF0
-|-----|------|------|
+           CCCC00
+  EEEE00   BBBB00
+  AAAA00   DDDD00   FFFF00
+|--------|--------|--------|
    0     1       2 
 ```
 
@@ -103,20 +104,20 @@ O ficheiro contém apenas informação relativa a pontos de atracagem que estão
 Exemplo:
 ```
 d5 LENA
-	p0 3 AA0:1000 BB0:2000 CC0:1500
-	p1 2 DD0:800 EE0:600
-	p2 1 FF0:750
+	p0 3 AAAA00:1000 BBBB00:2000 CCCC00:1500
+	p1 2 DDDD00:800 EEEE00:600
+	p2 1 FFFF00:750
 ```
 Neste exemplo a embarcação LENA encontra-se atracada no ponto 5 e contém as pilhas 0 1 e 2 ocupadas com contentores. As restantes pilhas desta embarcação estão vazias (livres) e poderão vir a ter contentores colocados por uma das gruas. Os restantes pontos de atracagem estão livres.
 
 Tanto os pontos de atracagem, como as pilhas, não necessitam de estar por ordem. No entanto, os contentores estão representados por ordem. No ficheiro da esquerda para a direita, representa os contentores que estão na pilha de baixo para cima. Um outro ficheiro válido que produziria o mesmo resultado do exemplo anterior seria:
 ```
 d5 LENA
-	p2 1 FF0:750
+	p2 1 FFFF00:750
 	p5 0
-	p1 2 DD0:800 EE0:600
+	p1 2 DDDD00:800 EEEE00:600
 	p3 0
-	p0 3 AA0:1000 BB0:2000 CC0:1500
+	p0 3 AAAA00:1000 BBBB00:2000 CCCC00:1500
 ```
 Neste caso, as pilhas não aparecem por ordem. Além disso há duas pilhas, 5 e 3 que estão explicitamente vazias. A pilha 4 também está vazia (implícitamente).
 
@@ -136,6 +137,9 @@ O programa deverá aceitar comandos introduzidos pelo utilizador, de acordo com 
 | navigate	[-e embarc] [-d ponto]
 | load		[-e embarc] [-p pilha] [-c contentor:peso]
 | weight	[embarc]
+| balance   [embarc]
+| search    [contentor]
+| goods     [contentor]
 | save		[filename]
 | help
 | quit
@@ -192,9 +196,9 @@ show -d 5
 apresenta a informação sobre a embarcação que está no ponto de atracagem 5. O output deverá ser:
 ```
 d5 LENA
-	p0 3 AA0:750 BB0:500 CC0:1000
-	p1 2 DD0:2222 EE0:500
-	p2 1 FF0:555
+	p0 3 AAAA00:750 BBBB00:500 CCCC00:1000
+	p1 2 DDDD00:2222 EEEE00:500
+	p2 1 FFFF00:555
 ```
 
 O comando:
@@ -211,12 +215,12 @@ apresenta a informação sobre todos os pontos de atracagem que estão ocupados 
 
 ```
 d5 LENA
-	p0 3 AA0:750 BB0:500 CC0:1000
-	p1 2 DD0:2222 EE0:500
-	p2 1 FF0:555
+	p0 3 AAAA00:750 BBBB00:500 CCCC00:1000
+	p1 2 DDDD00:2222 EEEE00:500
+	p2 1 FFFF00:555
 d6 TOOR
-	p1 1 AA0:1000 
-	p2 2 BB0:10000 CC0:800
+	p1 1 AAAA00:1000 
+	p2 2 BBBB00:10000 CCCC00:800
 ```
 
 ## Comando `where`
@@ -278,8 +282,45 @@ LENA 6650
 ```
 Em caso de falha (por exemplo, se a embarcação não for encontrada), deverá apresentar a mensagem `ERROR: invalid command`.
 
+## Comando `balance`
 
+Este comando permite saber se o barco está em equilíbrio tendo em conta a distribuição de peso na embarcação. No caso de uma embarcação ter um número ímpar de contentores o centro considera-se a posição da pilha do meio; caso o número de contentores seja par então considera-se que está entre as duas pilhas do centro.
 
+![weight_distro](./weight_distribution.jpg)
+
+Em que mi é o peso de um contentor e pi é a posição desse contentor. Todas as pilhas são equidistantes pelo que as posições podem tomar valores discretos.
+
+## Comando `search`
+
+Este comando permite procurar em que embarcação está um determinado contentor.Por exemplo,
+
+```
+search AAAA00
+```
+ Deverá ter como resultado:
+
+ ```
+ LENA p3 l0
+ ```
+
+ Em que p3 é a pilha do barco em que está o contentor e l0 é o nível, ou seja, a posição vertical do contentor deve ser contada a partir da base do barco.
+## Comando `goods`
+
+Este comando permite obter a lista de material dentro de um contentor. Por exemplo,
+
+```
+goods AAAA00
+```
+
+Deverá ter como resultado:
+
+ ```
+T-shirts
+Sweaters
+Trousers
+ ```
+
+A lista de bens é assim uma lista de strings contendo a descrição desses bens, não necessariamente apenas uma palavra.
 ## Comando `help`
 
 Com este comando o menu deverá ser apresentado no terminal.
@@ -334,15 +375,15 @@ A avaliação do pandora não irá avaliar todas as opções em todos os testes,
 SUCCESS: operation concluded
 >navigate -e XPTO -d 0
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AA0:500
+>load -e LENA -p 0 -c AAAA00:500
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AA0:500
+>load -e LENA -p 0 -c AAAA00:500
 ERROR: invalid command
 >show LENA
 ERROR: invalid command
 >show -e LENA
 d1 LENA
-        p0 1 AA0:500 
+        p0 1 AAAA00:500 
 
 >load -e LENA -p 0 -c AA1:500
 SUCCESS: operation concluded
@@ -384,7 +425,7 @@ SUCCESS: operation concluded
 SUCCESS: operation concluded
 >show -e LENA
 d1 LENA
-        p0 18 AA0:500 AA1:500 AA2:500 AA3:500 AA4:500 AA6:500 AA7:500 AA8:500 AA9:500 AB0:500 AB1:500 AB2:500 AB3:500 AB4:500 AB6:500 AB7:500 AB8:500 AB9:500 
+        p0 18 AAAA00:500 AA1:500 AA2:500 AA3:500 AA4:500 AA6:500 AA7:500 AA8:500 AA9:500 AB0:500 AB1:500 AB2:500 AB3:500 AB4:500 AB6:500 AB7:500 AB8:500 AB9:500 
 
 >weight LENA
 LENA 9000
@@ -394,14 +435,14 @@ d1 LENA
 SUCCESS: operation concluded
 >show -e LENA
 d1 LENA
-        p0 13 AA0:500 AA1:500 AA2:500 AA3:500 AA4:500 AA6:500 AA7:500 AA8:500 AA9:500 AB0:500 AB1:500 AB2:500 AB3:500 
+        p0 13 AAAA00:500 AA1:500 AA2:500 AA3:500 AA4:500 AA6:500 AA7:500 AA8:500 AA9:500 AB0:500 AB1:500 AB2:500 AB3:500 
         p1 5 AB9:500 AB8:500 AB7:500 AB6:500 AB4:500 
 
 >move -g B -d 1 -p 0 -D 1 -P 2 -n 6
 SUCCESS: operation concluded
 >show -e LENA
 d1 LENA
-        p0 7 AA0:500 AA1:500 AA2:500 AA3:500 AA4:500 AA6:500 AA7:500 
+        p0 7 AAAA00:500 AA1:500 AA2:500 AA3:500 AA4:500 AA6:500 AA7:500 
         p1 5 AB9:500 AB8:500 AB7:500 AB6:500 AB4:500 
         p2 6 AB0:500 AB1:500 AB2:500 AB3:500 AA8:500 AA9:500 
 
