@@ -37,7 +37,7 @@ Neste exercício vamos desenvolver um simulador de um estaleiro de embarcações
 A título de exemplo suponha que a embarcação `LENA` está atracada no ponto de atracagem `5`. Esta embarcação tem 3 pilhas de contentores. A pilha 0 tem os contentores AAAA00 BBBB00 CCCC00, a pilha 1 tem os contentores DDDD00 EEEE00 e a pilha P2 tem os contentores FFFF00, como se pode ver na seguinte imagem:
 
 
-![Lena01](./lena.png)
+![Lena01](./lena.jpg)
 
 
 Qualquer uma das gruas pode, por exemplo, mover 1 contentor da pilha 1 para a pilha 2 e neste caso será sempre retirado o contentor que está no topo da pilha, ou seja o EEEE00.  A grua B pode também mover 2 contentores da pilha 0 para a pilha 1, e neste caso serão movidos os contentores CCCC00 e BBBB00.
@@ -288,7 +288,26 @@ Este comando permite saber se o barco está em equilíbrio tendo em conta a dist
 
 ![weight_distro](./weight_distribution.jpg)
 
-Em que mi é o peso de um contentor e pi é a posição desse contentor. Todas as pilhas são equidistantes pelo que as posições podem tomar valores discretos.
+Em que mi é o peso de um contentor e pi é a posição desse contentor no barco. Todas as pilhas são equidistantes pelo que as posições tomam valores discretos, sendo sugerido usar o próprio número da pilha
+
+![lena2](./LENA2.jpg)
+
+Por exemplo, se considerarmos o barco com 4 pilhas e os contentores representados na figura a cima, vemos que o barco tem 4 pilhas numeradas de 0 a 3. Neste caso em particular o barco considera-se em equilíbrio se o seu centro de massa estiver na posição entre a pilha 1 e 2, ou seja 1.5 com uma tolerância de 0.5.
+
+Adicionalmente se considerarmos as seguintes cargas nos contentores:
+
+```
+d1 LENA
+        p0 3 AAAA00:500 BBBB00:500 CCCC00:500 
+        p1 0 
+		p2 1 DDDD00:3500 
+        p3 0 
+
+```
+
+Podemos verificar que a carga tem o seu centro na posição 1.4, estando o barco, por isso, capaz de navegar em segurança.
+
+![calculation](./calculation.jpg)
 
 ## Comando `search`
 
@@ -302,6 +321,8 @@ search AAAA00
  ```
  LENA p3 l0
  ```
+
+ Caso o contentor procurado não seja encontrado deverá ser apresentada a seguinte mensagem: `ERROR: Container not found`
 
  Em que p3 é a pilha do barco em que está o contentor e l0 é o nível, ou seja, a posição vertical do contentor deve ser contada a partir da base do barco.
 ## Comando `goods`
@@ -385,47 +406,47 @@ ERROR: invalid command
 d1 LENA
         p0 1 AAAA00:500 
 
->load -e LENA -p 0 -c AA1:500
+>load -e LENA -p 0 -c AAAA11:500
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AA2:500
+>load -e LENA -p 0 -c AAAA22:500
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AA3:500
+>load -e LENA -p 0 -c AAAA33:500
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AA4:500
+>load -e LENA -p 0 -c AAAA44:500
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AA1:500
+>load -e LENA -p 0 -c AAAA11:500
 ERROR: invalid command
->load -e LENA -p 0 -c AA6:500
+>load -e LENA -p 0 -c AAAA66:500
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AA7:500
+>load -e LENA -p 0 -c AAAA77:500
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AA8:500
+>load -e LENA -p 0 -c AAAA88:500
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AA9:500
+>load -e LENA -p 0 -c AAAA99:500
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AB0:500
+>load -e LENA -p 0 -c AABB00:500
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AB1:500
+>load -e LENA -p 0 -c AABB11:500
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AB2:500
+>load -e LENA -p 0 -c AABB22:500
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AB3:500
+>load -e LENA -p 0 -c AABB33:500
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AB4:500
+>load -e LENA -p 0 -c AABB44:500
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AB1:500
+>load -e LENA -p 0 -c AABB11:500
 ERROR: invalid command
->load -e LENA -p 0 -c AB6:500
+>load -e LENA -p 0 -c AABB66:500
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AB7:500
+>load -e LENA -p 0 -c AABB77:500
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AB8:500
+>load -e LENA -p 0 -c AABB88:500
 SUCCESS: operation concluded
->load -e LENA -p 0 -c AB9:500
+>load -e LENA -p 0 -c AABB99:500
 SUCCESS: operation concluded
 >show -e LENA
 d1 LENA
-        p0 18 AAAA00:500 AA1:500 AA2:500 AA3:500 AA4:500 AA6:500 AA7:500 AA8:500 AA9:500 AB0:500 AB1:500 AB2:500 AB3:500 AB4:500 AB6:500 AB7:500 AB8:500 AB9:500 
+        p0 18 AAAA00:500 AAAA11:500 AAAA22:500 AAAA33:500 AAAA44:500 AAAA66:500 AAAA77:500 AAAA88:500 AAAA99:500 AABB00:500 AABB11:500 AABB22:500 AABB33:500 AABB44:500 AABB66:500 AABB77:500 AABB88:500 AABB99:500 
 
 >weight LENA
 LENA 9000
@@ -435,16 +456,16 @@ d1 LENA
 SUCCESS: operation concluded
 >show -e LENA
 d1 LENA
-        p0 13 AAAA00:500 AA1:500 AA2:500 AA3:500 AA4:500 AA6:500 AA7:500 AA8:500 AA9:500 AB0:500 AB1:500 AB2:500 AB3:500 
-        p1 5 AB9:500 AB8:500 AB7:500 AB6:500 AB4:500 
+        p0 13 AAAA00:500 AAAA11:500 AAAA22:500 AAAA33:500 AAAA44:500 AAAA66:500 AAAA77:500 AAAA88:500 AAAA99:500 AABB00:500 AABB11:500 AABB22:500 AABB33:500 
+        p1 5 AABB99:500 AABB88:500 AABB77:500 AABB66:500 AABB44:500 
 
 >move -g B -d 1 -p 0 -D 1 -P 2 -n 6
 SUCCESS: operation concluded
 >show -e LENA
 d1 LENA
-        p0 7 AAAA00:500 AA1:500 AA2:500 AA3:500 AA4:500 AA6:500 AA7:500 
-        p1 5 AB9:500 AB8:500 AB7:500 AB6:500 AB4:500 
-        p2 6 AB0:500 AB1:500 AB2:500 AB3:500 AA8:500 AA9:500 
+        p0 7 AAAA00:500 AAAA11:500 AAAA22:500 AAAA33:500 AAAA44:500 AAAA66:500 AAAA77:500 
+        p1 5 AABB99:500 AABB88:500 AABB77:500 AABB66:500 AABB44:500 
+        p2 6 AABB00:500 AABB11:500 AABB22:500 AABB33:500 AAAA88:500 AAAA99:500 
 
 >
 ```
