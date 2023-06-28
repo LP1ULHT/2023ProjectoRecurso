@@ -285,10 +285,11 @@ Em caso de falha (por exemplo, se a embarcação não for encontrada), deverá a
 ## Comando `balance`
 
 Este comando permite saber se o barco está em equilíbrio tendo em conta a distribuição de peso na embarcação. No caso de uma embarcação ter um número ímpar de contentores o centro considera-se a posição da pilha do meio; caso o número de contentores seja par então considera-se que está entre as duas pilhas do centro.
+O equilibrio é calculado com a seguinte formula:
 
 ![weight_distro](./weight_distribution.jpg)
 
-Em que mi é o peso de um contentor e pi é a posição desse contentor no barco. Todas as pilhas são equidistantes pelo que as posições tomam valores discretos, sendo sugerido usar o próprio número da pilha
+Em que mi é o peso total dod um contentores numa posicao e pi é a posição desse contentor no barco. Todas as pilhas são equidistantes pelo que as posições tomam valores discretos, sendo sugerido usar o próprio número da pilha
 
 ![lena2](./LENA2.jpg)
 
