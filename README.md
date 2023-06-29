@@ -14,7 +14,7 @@
 >- O programa não deve ter *memory leaks*.
 >- O trabalho deve ser desenvolvido e submetido de forma individual.
 
->Este exercício deverá ser submetido na plataforma Pandora até às 23h59 de dia 18 Junho e será contabilizado para a nota final da unidade curricular de acordo com os critérios disponibilizados na página da disciplina, concretamente nos slides da primeira aula.
+>Este exercício deverá ser submetido na plataforma Pandora até às 23h59 de dia 12 de Julho e será contabilizado para a nota final da unidade curricular de acordo com os critérios disponibilizados na página da disciplina, concretamente nos slides da primeira aula.
 
 >Todos os trabalhos serão comparados utilizando um sistema de deteção de plágio.
 
@@ -364,7 +364,7 @@ Em caso de sucesso deve apresentar a mensagem: `SUCCESS: operation concluded`
 Termina a execução do simulador.
 
 ## Conselhos de Implementação
-
+# TODO
 - Comece por definir as estruturas para as embarcacoes, pontos de atracagem e contentores. 
 - Escreva funções atómicas para validar os identificadores das embarcações, pontos de atracagem e contentores.
 - Desenvolva a opção `quit`.
@@ -378,7 +378,7 @@ A avaliação do pandora não irá avaliar todas as opções em todos os testes,
 
 
 ## Exemplos
-
+# TODO
 ```bash
 % ./portmanager
 +---- MENU
@@ -388,6 +388,9 @@ A avaliação do pandora não irá avaliar todas as opções em todos os testes,
 | navigate      [-e embarc] [-d ponto]
 | load          [-e embarc] [-p pilha] [-c contentor:peso]
 | weight        [embarc]
+| balance   	[embarc]
+| search    	[contentor]
+| goods     	[contentor]
 | save          [filename]
 | help 
 | quit 
