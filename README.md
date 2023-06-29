@@ -107,8 +107,14 @@ d5 LENA
 	p0 3 AAAA00:1000 BBBB00:2000 CCCC00:1500
 	p1 2 DDDD00:800 EEEE00:600
 	p2 1 FFFF00:750
+
+c AAAA00:
+	lamps
+	chairs
+	tables
+	couches
 ```
-Neste exemplo a embarcação LENA encontra-se atracada no ponto 5 e contém as pilhas 0 1 e 2 ocupadas com contentores. As restantes pilhas desta embarcação estão vazias (livres) e poderão vir a ter contentores colocados por uma das gruas. Os restantes pontos de atracagem estão livres.
+Neste exemplo a embarcação LENA encontra-se atracada no ponto 5 e contém as pilhas 0 1 e 2 ocupadas com contentores. As restantes pilhas desta embarcação estão vazias (livres) e poderão vir a ter contentores colocados por uma das gruas. Os restantes pontos de atracagem estão livres. Adicionalmente, o contentor com o identificador `AAAA00` tem a seguinte lista de bens: lapms, chair, tables and couches. Todos os contentores que não têm uma entreda começada por `c` com a sua lista de bens, estão vazios.
 
 Tanto os pontos de atracagem, como as pilhas, não necessitam de estar por ordem. No entanto, os contentores estão representados por ordem. No ficheiro da esquerda para a direita, representa os contentores que estão na pilha de baixo para cima. Um outro ficheiro válido que produziria o mesmo resultado do exemplo anterior seria:
 ```
@@ -282,6 +288,23 @@ LENA 6650
 ```
 Em caso de falha (por exemplo, se a embarcação não for encontrada), deverá apresentar a mensagem `ERROR: invalid command`.
 
+## Comando `search`
+
+Este comando permite procurar em que embarcação está um determinado contentor. Por exemplo,
+
+```
+search AAAA00
+```
+ Deverá ter como resultado:
+
+ ```
+ AAAA00 at LENA p3 l0
+ ```
+
+ Caso o contentor procurado não seja encontrado deverá ser apresentada a seguinte mensagem: `ERROR: Container not found`
+
+ Em que p3 é a pilha do barco em que está o contentor e l0 é o nível, ou seja, a posição vertical do contentor deve ser contada a partir da base do barco.
+
 ## Comando `balance`
 
 Este comando permite saber se o barco está em equilíbrio tendo em conta a distribuição de peso na embarcação. No caso de uma embarcação ter um número ímpar de contentores o centro considera-se a posição da pilha do meio; caso o número de contentores seja par então considera-se que está entre as duas pilhas do centro.
@@ -289,7 +312,7 @@ O equilibrio é calculado com a seguinte formula:
 
 ![weight_distro](./weight_distribution.jpg)
 
-Em que mi é o peso total dod um contentores numa posicao e pi é a posição desse contentor no barco. Todas as pilhas são equidistantes pelo que as posições tomam valores discretos, sendo sugerido usar o próprio número da pilha
+Em que mi é o peso de um contentores e pi é a posição desse contentor no barco. Todas as pilhas são equidistantes pelo que as posições tomam valores discretos, sendo sugerido usar o próprio número da pilha.
 
 ![lena2](./LENA2.jpg)
 
@@ -310,25 +333,11 @@ Podemos verificar que a carga tem o seu centro na posição 1.4, estando o barco
 
 ![calculation](./calculation.jpg)
 
-## Comando `search`
+No caso de o barco estar equilibrado deve ser apresentada no terminal a seguinte mensagem: `SUCCESS: The Boat is balanced`; caso contrário deverá ser apresentada a mensagem: `ERROR: The Boat is Unbalanced`.
 
-Este comando permite procurar em que embarcação está um determinado contentor.Por exemplo,
-
-```
-search AAAA00
-```
- Deverá ter como resultado:
-
- ```
- LENA p3 l0
- ```
-
- Caso o contentor procurado não seja encontrado deverá ser apresentada a seguinte mensagem: `ERROR: Container not found`
-
- Em que p3 é a pilha do barco em que está o contentor e l0 é o nível, ou seja, a posição vertical do contentor deve ser contada a partir da base do barco.
 ## Comando `goods`
 
-Este comando permite obter a lista de material dentro de um contentor. Por exemplo,
+Este comando permite obter a lista de material dentro de um contentor e a sua localização. Por exemplo,
 
 ```
 goods AAAA00
@@ -337,12 +346,15 @@ goods AAAA00
 Deverá ter como resultado:
 
  ```
-T-shirts
-Sweaters
-Trousers
+AAAA00 at LENA p3 10
+	T-shirts
+	Sweaters
+	Trousers
  ```
 
-A lista de bens é assim uma lista de strings contendo a descrição desses bens, não necessariamente apenas uma palavra.
+ Em que p3 é a pilha do barco em que está o contentor e l0 é o nível, ou seja, a posição vertical do contentor deve ser contada a partir da base do barco. A lista de bens é assim uma lista de strings contendo a descrição desses bens, não necessariamente apenas uma palavra.
+
+Caso o contentor procurado não seja encontrado deverá ser apresentada a seguinte mensagem: `ERROR: Container not found`
 ## Comando `help`
 
 Com este comando o menu deverá ser apresentado no terminal.
@@ -365,7 +377,6 @@ Em caso de sucesso deve apresentar a mensagem: `SUCCESS: operation concluded`
 Termina a execução do simulador.
 
 ## Conselhos de Implementação
-# TODO
 - Comece por definir as estruturas para as embarcacoes, pontos de atracagem e contentores. 
 - Escreva funções atómicas para validar os identificadores das embarcações, pontos de atracagem e contentores.
 - Desenvolva a opção `quit`.
@@ -379,7 +390,6 @@ A avaliação do pandora não irá avaliar todas as opções em todos os testes,
 
 
 ## Exemplos
-# TODO
 ```bash
 % ./portmanager
 +---- MENU
@@ -390,7 +400,7 @@ A avaliação do pandora não irá avaliar todas as opções em todos os testes,
 | load          [-e embarc] [-p pilha] [-c contentor:peso]
 | weight        [embarc]
 | balance   	[embarc]
-| search    	[contentor]
+| search    [contentor]
 | goods     	[contentor]
 | save          [filename]
 | help 
