@@ -114,7 +114,7 @@ c AAAA00:
 	tables
 	couches
 ```
-Neste exemplo a embarcação LENA encontra-se atracada no ponto 5 e contém as pilhas 0 1 e 2 ocupadas com contentores. As restantes pilhas desta embarcação estão vazias (livres) e poderão vir a ter contentores colocados por uma das gruas. Os restantes pontos de atracagem estão livres. Adicionalmente, o contentor com o identificador `AAAA00` tem a seguinte lista de bens: lapms, chair, tables and couches. Todos os contentores que não têm uma entreda começada por `c` com a sua lista de bens, estão vazios.
+Neste exemplo a embarcação LENA encontra-se atracada no ponto 5 e contém as pilhas 0 1 e 2 ocupadas com contentores. As restantes pilhas desta embarcação estão vazias (livres) e poderão vir a ter contentores colocados por uma das gruas. Os restantes pontos de atracagem estão livres. Adicionalmente, o contentor com o identificador `AAAA00` tem a seguinte lista de bens: lapms, chair, tables and couches. Todos os contentores que não têm uma entrada começada por `c` com a sua lista de bens, estão vazios.
 
 Tanto os pontos de atracagem, como as pilhas, não necessitam de estar por ordem. No entanto, os contentores estão representados por ordem. No ficheiro da esquerda para a direita, representa os contentores que estão na pilha de baixo para cima. Um outro ficheiro válido que produziria o mesmo resultado do exemplo anterior seria:
 ```
