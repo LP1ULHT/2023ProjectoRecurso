@@ -1,4 +1,6 @@
 d0 XPTO
+	p0 1 ABCD12:500
+	p6 1 EFGH34:500
 
 d1 LENA
 	p0 7 AAAA00:500 AAAA11:500 AAAA22:500 AAAA33:500 AAAA44:500 AAAA66:500 AAAA77:500 
@@ -10,4 +12,10 @@ c AAAA00:
 	chairs
 	tables
 	couches
+	tables
+	phones
+	;
 
+
+
+	

@@ -30,7 +30,7 @@ Neste exercício vamos desenvolver um simulador de um estaleiro de embarcações
 - Cada contentor tem também associado um peso, em kg. O peso dos contentores tem de ser sempre igual ou superior a 500kg.
 - Cada contentor tem ainda associada uma lista com os produtos transportados nesse contentor. Esta lista pode conter um número arbitrário de elementos.
 
-- Existem duas gruas identificadas pelas letras A e B, que servem para mover contentores entre pilhas. As gruas têm comportamentos ligeiramente diferentes, contudo ambas transportam contentores que estão numa determinada pilha de uma embarcação para outra pilha que poderá estar na mesma embarcação, noutra embarcação, ou em terra. 
+- Existem duas gruas identificadas pelas letras A e B, que servem para mover contentores entre pilhas. As gruas têm comportamentos ligeiramente diferentes, contudo ambas transportam contentores que estão numa determinada pilha de uma embarcação para outra pilha que poderá estar na mesma embarcação, noutra embarcação.
 
 - Não há limite para o número de contentores que uma pilha pode suportar.
 
@@ -72,7 +72,7 @@ Por outro lado se o mesmo comando for dado à grua B, a pilha 2 ficaria com os c
 A grua B move sempre o máximo de contentores possível de cada vez. Caso haja uma ordem para mover um número superior a 4, a grua terá de fazer mais do que um movimento.
 
 ## Execução do programa
-O programa pode aceitar um parâmetro (obcional) na linha de comandos que indica o nome do ficheiro de configuração que deverá ser lido pelo simulador. Por exemplo:
+O programa pode aceitar um parâmetro (opcional) na linha de comandos que indica o nome do ficheiro de configuração que deverá ser lido pelo simulador. Por exemplo:
 ```
 ./porto ficheiro_porto_lisboa.txt
 ```
@@ -97,6 +97,13 @@ d<ponto de atracagem> <matricula>
 	p3 <numero de contentores da pilha 3> <contentor 0 da pilha 1:peso> <contentor 1 pilha 1:peso> <contentor 2 pilha 1:peso>...
 	p4 <numero de contentores da pilha 4> <contentor 0 da pilha 1:peso> <contentor 1 pilha 1:peso> <contentor 2 pilha 1:peso>...
 	p5 <numero de contentores da pilha 5> <contentor 0 da pilha 1:peso> <contentor 1 pilha 1:peso> <contentor 2 pilha 1:peso>...
+
+c <numero de um contentor já inserido>:
+	<produto 0 dentro do contentor>
+	<produto 1 dentro do contentor>
+	<produto 2 dentro do contentor>
+	...
+	;
 ...
 ```
 O ficheiro contém apenas informação relativa a pontos de atracagem que estão ocupados por embarcações, assim como contém apenas informação sobre as pilhas que têm contentores. Pontos de embarcação que não estejam no ficheiro estão, por defeito livres. Assim como, pilhas que não têm contentores são consideradas vazias. 
@@ -113,8 +120,9 @@ c AAAA00:
 	chairs
 	tables
 	couches
+	;
 ```
-Neste exemplo a embarcação LENA encontra-se atracada no ponto 5 e contém as pilhas 0 1 e 2 ocupadas com contentores. As restantes pilhas desta embarcação estão vazias (livres) e poderão vir a ter contentores colocados por uma das gruas. Os restantes pontos de atracagem estão livres. Adicionalmente, o contentor com o identificador `AAAA00` tem a seguinte lista de bens: lapms, chair, tables and couches. Todos os contentores que não têm uma entreda começada por `c` com a sua lista de bens, estão vazios.
+Neste exemplo a embarcação LENA encontra-se atracada no porto 5 e contém as pilhas 0 1 e 2 ocupadas com contentores. As restantes pilhas desta embarcação estão vazias (livres) e poderão vir a ter contentores colocados por uma das gruas. Os restantes pontos de atracagem estão livres. Adicionalmente, o contentor com o identificador `AAAA00` tem a seguinte lista de bens: lapms, chair, tables and couches. Todos os contentores que não têm uma entreda começada por `c` com a sua lista de bens, estão vazios. A lista de bens em cada contentor termina sempre com o caracter `;`, que está numa linha sem nenhum bem.
 
 Tanto os pontos de atracagem, como as pilhas, não necessitam de estar por ordem. No entanto, os contentores estão representados por ordem. No ficheiro da esquerda para a direita, representa os contentores que estão na pilha de baixo para cima. Um outro ficheiro válido que produziria o mesmo resultado do exemplo anterior seria:
 ```
@@ -268,7 +276,7 @@ Este comando serve para criar um contentor novo numa embarcação. . Contudo, es
 
 Por exemplo, se quisermos criar na embarcação TOOR um contentor na pilha 1 nomeado FF3 com peso de 750kg, seria dado o seguinte comando:
 ```
-load -e TOOR -p 1 -c FF3:750
+load -e TOOR -p 1 -c FFFF33:750
 ```
 
 
@@ -298,12 +306,12 @@ search AAAA00
  Deverá ter como resultado:
 
  ```
- AAAA00 at LENA p3 l0
+ AAAA00 at LENA p0 0
  ```
 
  Caso o contentor procurado não seja encontrado deverá ser apresentada a seguinte mensagem: `ERROR: Container not found`
 
- Em que p3 é a pilha do barco em que está o contentor e l0 é o nível, ou seja, a posição vertical do contentor deve ser contada a partir da base do barco.
+ Em que p0 é a pilha do barco em que está o contentor e 0 é o nível, ou seja, a posição vertical do contentor deve ser contada a partir da base do barco.
 
 ## Comando `balance`
 
@@ -346,15 +354,21 @@ goods AAAA00
 Deverá ter como resultado:
 
  ```
-AAAA00 at LENA p3 10
+AAAA00 at LENA p0 0
 	T-shirts
 	Sweaters
 	Trousers
  ```
 
- Em que p3 é a pilha do barco em que está o contentor e l0 é o nível, ou seja, a posição vertical do contentor deve ser contada a partir da base do barco. A lista de bens é assim uma lista de strings contendo a descrição desses bens, não necessariamente apenas uma palavra.
+ Em que p0 é a pilha do barco em que está o contentor e 0 é o nível, ou seja, a posição vertical do contentor deve ser contada a partir da base do barco. A lista de bens é assim uma lista de strings contendo a descrição desses bens, não necessariamente apenas uma palavra.
 
 Caso o contentor procurado não seja encontrado deverá ser apresentada a seguinte mensagem: `ERROR: Container not found`
+Caso o contentor não contenha bens, deverá ser mostrada a localização do contentor, mas com a mensagem `EMPTY`, por exemplo:
+
+```
+BBBB00 at LENA p0 1
+	EMPTY
+```
 ## Comando `help`
 
 Com este comando o menu deverá ser apresentado no terminal.
