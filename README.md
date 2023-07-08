@@ -400,7 +400,7 @@ Termina a execução do simulador.
 - Desenvolva a opcao `show`.
 - Desenvolva o resto das opções.
 
-A avaliação do pandora não irá avaliar todas as opções em todos os testes, ou seja, se apenas implementar algumas opções, certamente já terá uma parte da nota. Tenha em consideração que as opções `quit`, `navigate`, `where`, `load`, `show` são obrigatórias. Sempre que desenvolver uma opção nova, submeta o projecto no Pandora.
+A avaliação do pandora não irá avaliar todas as opções em todos os testes, ou seja, se apenas implementar algumas opções, certamente já terá uma parte da nota. Tenha em consideração que as opções `quit`, `navigate`, `where`, `load`, `show`, `balance`, `search` e `goods` são obrigatórias. Sempre que desenvolver uma opção nova, submeta o projecto no Pandora.
 
 
 ## Exemplos
