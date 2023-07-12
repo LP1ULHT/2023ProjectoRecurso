@@ -14,7 +14,7 @@
 >- O programa não deve ter *memory leaks*.
 >- O trabalho deve ser desenvolvido e submetido de forma individual.
 
->Este exercício deverá ser submetido na plataforma Pandora até às 23h59 de dia 12 de Julho e será contabilizado para a nota final da unidade curricular de acordo com os critérios disponibilizados na página da disciplina, concretamente nos slides da primeira aula.
+>Este exercício deverá ser submetido na plataforma Pandora até às 23h59 de dia 14 de Julho e será contabilizado para a nota final da unidade curricular de acordo com os critérios disponibilizados na página da disciplina, concretamente nos slides da primeira aula.
 
 >Todos os trabalhos serão comparados utilizando um sistema de deteção de plágio.
 
